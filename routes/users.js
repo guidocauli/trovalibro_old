@@ -31,11 +31,26 @@ router.get('/:id', (req, res) => {
     res.json({ user: publicUser(user, { includeContacts: isSelf }) });
 });
 
-// PUT /api/users/me — aggiorna il proprio profilo (inclusa gestione consenso posizione)
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// PUT /api/users/me — aggiorna il proprio profilo (inclusa gestione consenso posizione ed email)
 router.put('/me', requireAuth, (req, res) => {
-    const { display_name, bio, latitude, longitude, location_label, location_precision, share_location } = req.body || {};
+    const { display_name, bio, email, latitude, longitude, location_label, location_precision, share_location } = req.body || {};
 
     const current = db.prepare('SELECT * FROM users WHERE id = ?').get(req.session.userId);
+
+    let newEmail = current.email;
+    if (email !== undefined && email !== null && email.trim() !== current.email) {
+        const trimmedEmail = email.trim();
+        if (!EMAIL_RE.test(trimmedEmail)) {
+            return res.status(400).json({ error: 'Inserisci un indirizzo email valido.' });
+        }
+        const taken = db.prepare('SELECT id FROM users WHERE email = ? AND id != ?').get(trimmedEmail, req.session.userId);
+        if (taken) {
+            return res.status(409).json({ error: 'Questo indirizzo email è già associato a un altro account.' });
+        }
+        newEmail = trimmedEmail;
+    }
 
     let lat = current.latitude, lon = current.longitude;
     const precision = location_precision || current.location_precision;
@@ -50,12 +65,13 @@ router.put('/me', requireAuth, (req, res) => {
     }
 
     db.prepare(`
-        UPDATE users SET display_name = ?, bio = ?, latitude = ?, longitude = ?,
+        UPDATE users SET display_name = ?, bio = ?, email = ?, latitude = ?, longitude = ?,
                location_label = ?, location_precision = ?, share_location = ?, updated_at = datetime('now')
         WHERE id = ?
     `).run(
         display_name ?? current.display_name,
         bio ?? current.bio,
+        newEmail,
         lat, lon,
         location_label ?? current.location_label,
         precision,

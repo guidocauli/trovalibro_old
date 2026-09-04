@@ -15,6 +15,7 @@ async function requireLogin() {
 
 function fillForm(user) {
     document.getElementById('display_name').value = user.display_name || '';
+    document.getElementById('email').value = user.email || '';
     document.getElementById('bio').value = user.bio || '';
     document.getElementById('share_location').checked = !!user.share_location;
     document.getElementById('location-options').style.display = user.share_location ? 'block' : 'none';
@@ -110,6 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const shareLocation = document.getElementById('share_location').checked;
         const payload = {
             display_name: document.getElementById('display_name').value.trim(),
+            email: document.getElementById('email').value.trim(),
             bio: document.getElementById('bio').value.trim(),
             share_location: shareLocation,
             location_precision: document.getElementById('location_precision').value,
