@@ -48,6 +48,63 @@ async function init() {
     document.getElementById('loans-status-body').innerHTML = data.loans_by_status.map(l => `
         <tr><td><span class="status-pill status-${l.stato}">${statusLabel[l.stato] || l.stato}</span></td><td>${l.n}</td></tr>
     `).join('') || '<tr><td colspan="2">Nessuna richiesta ancora.</td></tr>';
+
+    await loadUsers(user.id);
+}
+
+async function loadUsers(currentAdminId) {
+    const { users } = await api.get('/api/admin/users');
+    const tbody = document.getElementById('users-table-body');
+    tbody.innerHTML = users.map(u => `
+        <tr>
+            <td>${escapeHtml(u.display_name)} <span class="hint">(${escapeHtml(u.username)})</span></td>
+            <td>${escapeHtml(u.email)}</td>
+            <td>${u.role === 'admin' ? '<span class="badge">Admin</span>' : 'Utente'}</td>
+            <td>${u.book_count}</td>
+            <td>${new Date(u.created_at).toLocaleDateString('it-IT')}</td>
+            <td>
+                ${u.id === currentAdminId ? '<span class="hint">Il tuo account</span>' : `
+                    <button class="btn btn-ghost btn-sm" data-reset="${u.id}" data-name="${escapeHtml(u.display_name)}" type="button">Reimposta password</button>
+                    <button class="btn btn-ghost btn-sm" data-delete="${u.id}" data-name="${escapeHtml(u.display_name)}" type="button" style="color:var(--danger)">Elimina</button>
+                `}
+            </td>
+        </tr>
+    `).join('');
+
+    const errorBox = document.getElementById('users-error');
+    const successBox = document.getElementById('users-success');
+
+    tbody.querySelectorAll('[data-reset]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            errorBox.hidden = true; successBox.hidden = true;
+            const newPassword = prompt(`Nuova password per ${btn.dataset.name} (almeno 8 caratteri):`);
+            if (!newPassword) return;
+            try {
+                await api.put(`/api/admin/users/${btn.dataset.reset}/reset-password`, { new_password: newPassword });
+                successBox.textContent = `Password di ${btn.dataset.name} aggiornata.`;
+                successBox.hidden = false;
+            } catch (err) {
+                errorBox.textContent = err.message;
+                errorBox.hidden = false;
+            }
+        });
+    });
+
+    tbody.querySelectorAll('[data-delete]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            errorBox.hidden = true; successBox.hidden = true;
+            if (!confirm(`Eliminare definitivamente l'account di ${btn.dataset.name} e tutti i suoi libri? L'operazione non è reversibile.`)) return;
+            try {
+                await api.del(`/api/admin/users/${btn.dataset.delete}`);
+                successBox.textContent = `Account di ${btn.dataset.name} eliminato.`;
+                successBox.hidden = false;
+                loadUsers(currentAdminId);
+            } catch (err) {
+                errorBox.textContent = err.message;
+                errorBox.hidden = false;
+            }
+        });
+    });
 }
 
 document.addEventListener('DOMContentLoaded', init);

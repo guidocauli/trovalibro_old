@@ -121,4 +121,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             errorBox.hidden = false;
         }
     });
+
+    document.getElementById('delete-account-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errorBox = document.getElementById('delete-account-error');
+        errorBox.hidden = true;
+
+        if (!confirm('Sei sicuro di voler eliminare definitivamente il tuo account e tutti i libri pubblicati? L\'operazione non è reversibile.')) {
+            return;
+        }
+
+        const password = document.getElementById('delete_password').value;
+        try {
+            await api.request('DELETE', '/api/users/me', { password });
+            window.location.href = '/';
+        } catch (err) {
+            errorBox.textContent = err.message;
+            errorBox.hidden = false;
+        }
+    });
 });

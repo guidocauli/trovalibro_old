@@ -7,6 +7,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const bookRoutes = require('./routes/books');
 const statsRoutes = require('./routes/stats');
+const adminRoutes = require('./routes/admin');
 const { attachSession } = require('./middleware/auth');
 
 require('./db/database'); // apre/inizializza il DB al boot
@@ -40,6 +41,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/books', bookRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Gestione errori centralizzata (es. errori multer/sharp non catturati a monte)
 app.use((err, req, res, next) => {

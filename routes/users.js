@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const db = require('../db/database');
 const { requireAuth } = require('../middleware/auth');
 const { fuzzCoordinates } = require('../utils/geo');
+const { deleteImageIfExists } = require('../middleware/upload');
 
 const router = express.Router();
 const SALT_ROUNDS = 11;
@@ -96,6 +97,41 @@ router.put('/me/password', requireAuth, async (req, res) => {
       .run(newHash, req.session.userId);
 
     res.json({ ok: true });
+});
+
+// DELETE /api/users/me — elimina definitivamente il proprio account e tutti i dati collegati
+// (libri pubblicati, immagini, richieste di prestito inviate, consensi). Richiede la password
+// per confermare l'operazione, che è irreversibile.
+router.delete('/me', requireAuth, async (req, res) => {
+    const { password } = req.body || {};
+    if (!password) {
+        return res.status(400).json({ error: 'Inserisci la password per confermare l\'eliminazione dell\'account.' });
+    }
+
+    const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.session.userId);
+    const ok = await bcrypt.compare(password, user.password_hash);
+    if (!ok) return res.status(401).json({ error: 'Password non corretta.' });
+
+    if (user.role === 'admin') {
+        const adminCount = db.prepare(`SELECT COUNT(*) AS n FROM users WHERE role = 'admin'`).get().n;
+        if (adminCount <= 1) {
+            return res.status(400).json({ error: 'Non puoi eliminare il tuo account: sei l\'unico amministratore rimasto.' });
+        }
+    }
+
+    const images = db.prepare('SELECT cover_path, thumb_path FROM books WHERE owner_id = ?').all(user.id);
+
+    db.prepare('DELETE FROM users WHERE id = ?').run(user.id); // CASCADE su books, loan_requests, consent_log
+
+    images.forEach(img => {
+        deleteImageIfExists(img.cover_path);
+        deleteImageIfExists(img.thumb_path);
+    });
+
+    req.session.destroy(() => {
+        res.clearCookie('connect.sid');
+        res.json({ ok: true });
+    });
 });
 
 // GET /api/users/nearby?lat=&lon=&radius_km= — utenti limitrofi che condividono la posizione

@@ -83,6 +83,23 @@
                         <button class="btn btn-primary" type="submit">Aggiorna password</button>
                     </form>
                 </div>
+
+                <div class="form-card" style="margin-top:1.5rem; border-color:var(--danger)">
+                    <h2 style="margin-top:0; color:var(--danger)">Elimina account</h2>
+                    <p class="hint">Questa operazione è <strong>irreversibile</strong>: verranno eliminati definitivamente il tuo profilo, tutti i libri che hai pubblicato (comprese le immagini), le richieste di prestito che hai inviato e le tue statistiche.</p>
+                    <div class="banner banner-error" id="delete-account-error" hidden></div>
+                    <form id="delete-account-form">
+                        <div class="field">
+                            <label for="delete_password">Conferma la tua password</label>
+                            <input id="delete_password" name="delete_password" type="password" autocomplete="current-password" required>
+                        </div>
+                        <div class="checkbox-row field">
+                            <input type="checkbox" id="delete_confirm_checkbox" required>
+                            <label for="delete_confirm_checkbox" style="margin:0">Ho capito che l'eliminazione dell'account è definitiva e non recuperabile.</label>
+                        </div>
+                        <button class="btn btn-danger" type="submit">Elimina definitivamente il mio account</button>
+                    </form>
+                </div>
             </section>
 
             <section aria-labelledby="my-books-heading">

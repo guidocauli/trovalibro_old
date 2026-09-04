@@ -59,6 +59,23 @@
                     <tbody id="loans-status-body"></tbody>
                 </table>
             </div>
+
+            <h2>Gestione utenti</h2>
+            <p class="hint">Reimposta la password di un utente (es. su sua richiesta) o elimina un account e tutti i suoi dati. Entrambe le operazioni sono irreversibili.</p>
+            <div class="banner banner-error" id="users-error" hidden></div>
+            <div class="banner banner-success" id="users-success" hidden></div>
+            <div class="table-wrap">
+                <table>
+                    <caption class="sr-only">Elenco degli utenti registrati con azioni di gestione</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Utente</th><th scope="col">Email</th><th scope="col">Ruolo</th>
+                            <th scope="col">Libri</th><th scope="col">Registrato il</th><th scope="col">Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </main>
