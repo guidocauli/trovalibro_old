@@ -61,6 +61,28 @@
                         <button class="btn btn-primary" type="submit">Salva modifiche</button>
                     </form>
                 </div>
+
+                <div class="form-card" style="margin-top:1.5rem">
+                    <h2 style="margin-top:0">Cambia password</h2>
+                    <div class="banner banner-error" id="password-error" hidden></div>
+                    <div class="banner banner-success" id="password-success" hidden></div>
+                    <form id="password-form" novalidate>
+                        <div class="field">
+                            <label for="current_password">Password attuale</label>
+                            <input id="current_password" name="current_password" type="password" autocomplete="current-password" required>
+                        </div>
+                        <div class="field">
+                            <label for="new_password">Nuova password</label>
+                            <input id="new_password" name="new_password" type="password" autocomplete="new-password" minlength="8" required>
+                            <p class="hint">Almeno 8 caratteri.</p>
+                        </div>
+                        <div class="field">
+                            <label for="new_password_confirm">Conferma nuova password</label>
+                            <input id="new_password_confirm" name="new_password_confirm" type="password" autocomplete="new-password" minlength="8" required>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Aggiorna password</button>
+                    </form>
+                </div>
             </section>
 
             <section aria-labelledby="my-books-heading">

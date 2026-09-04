@@ -1,9 +1,11 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
 const db = require('../db/database');
 const { requireAuth } = require('../middleware/auth');
 const { fuzzCoordinates } = require('../utils/geo');
 
 const router = express.Router();
+const SALT_ROUNDS = 11;
 
 function publicUser(u, { includeContacts = false } = {}) {
     if (!u) return null;
@@ -67,6 +69,33 @@ router.put('/me', requireAuth, (req, res) => {
 
     const updated = db.prepare('SELECT * FROM users WHERE id = ?').get(req.session.userId);
     res.json({ user: publicUser(updated, { includeContacts: true }) });
+});
+
+// PUT /api/users/me/password — cambio password (richiede la password attuale)
+router.put('/me/password', requireAuth, async (req, res) => {
+    const { current_password, new_password } = req.body || {};
+
+    if (!current_password || !new_password) {
+        return res.status(400).json({ error: 'Inserisci la password attuale e la nuova password.' });
+    }
+    if (new_password.length < 8) {
+        return res.status(400).json({ error: 'La nuova password deve avere almeno 8 caratteri.' });
+    }
+    if (new_password === current_password) {
+        return res.status(400).json({ error: 'La nuova password deve essere diversa da quella attuale.' });
+    }
+
+    const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.session.userId);
+    const isCurrentCorrect = await bcrypt.compare(current_password, user.password_hash);
+    if (!isCurrentCorrect) {
+        return res.status(401).json({ error: 'La password attuale inserita non è corretta.' });
+    }
+
+    const newHash = await bcrypt.hash(new_password, SALT_ROUNDS);
+    db.prepare(`UPDATE users SET password_hash = ?, updated_at = datetime('now') WHERE id = ?`)
+      .run(newHash, req.session.userId);
+
+    res.json({ ok: true });
 });
 
 // GET /api/users/nearby?lat=&lon=&radius_km= — utenti limitrofi che condividono la posizione

@@ -94,4 +94,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             errorBox.hidden = false;
         }
     });
+
+    document.getElementById('password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errorBox = document.getElementById('password-error');
+        const successBox = document.getElementById('password-success');
+        errorBox.hidden = true; successBox.hidden = true;
+
+        const current_password = document.getElementById('current_password').value;
+        const new_password = document.getElementById('new_password').value;
+        const confirm = document.getElementById('new_password_confirm').value;
+
+        if (new_password !== confirm) {
+            errorBox.textContent = 'La nuova password e la conferma non coincidono.';
+            errorBox.hidden = false;
+            return;
+        }
+
+        try {
+            await api.put('/api/users/me/password', { current_password, new_password });
+            successBox.textContent = 'Password aggiornata con successo.';
+            successBox.hidden = false;
+            document.getElementById('password-form').reset();
+        } catch (err) {
+            errorBox.textContent = err.message;
+            errorBox.hidden = false;
+        }
+    });
 });
