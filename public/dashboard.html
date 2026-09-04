@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le tue statistiche — Biblioteca Diffusa</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contenuto principale</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/">Cerca libri</a>
+            <a href="/utenti-vicini.html">Utenti vicini</a>
+        </nav>
+        <div class="nav-user" id="nav-user-slot" aria-live="polite"></div>
+    </div>
+</header>
+<main id="main">
+    <div class="container">
+        <h1>Le tue statistiche</h1>
+        <p>Visualizzazioni e richieste ricevute sui libri che hai pubblicato.</p>
+
+        <div class="stat-grid" id="totals-grid"></div>
+
+        <h2>Andamento per libro</h2>
+        <div class="table-wrap">
+            <table>
+                <caption class="sr-only">Statistiche per ciascun libro pubblicato</caption>
+                <thead>
+                    <tr><th scope="col">Libro</th><th scope="col">Visualizzazioni</th><th scope="col">Richieste di prestito</th><th scope="col">Dettaglio</th></tr>
+                </thead>
+                <tbody id="stats-table-body"></tbody>
+            </table>
+        </div>
+
+        <section id="book-detail-stats" hidden>
+            <h2 id="detail-title">Dettaglio libro</h2>
+            <div class="stat-grid" id="detail-totals"></div>
+            <div class="chart-wrap">
+                <h3>Visualizzazioni negli ultimi giorni</h3>
+                <div class="bar-chart" id="views-chart" role="img" aria-label="Grafico a barre delle visualizzazioni giornaliere"></div>
+            </div>
+        </section>
+    </div>
+</main>
+<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
+<script src="/js/api.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pubblica un libro — Biblioteca Diffusa</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contenuto principale</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/">Cerca libri</a>
+            <a href="/utenti-vicini.html">Utenti vicini</a>
+        </nav>
+        <div class="nav-user" id="nav-user-slot" aria-live="polite"></div>
+    </div>
+</header>
+<main id="main">
+    <div class="container">
+        <h1 id="page-title">Pubblica un libro</h1>
+        <p>I campi con <span aria-hidden="true">*</span><span class="sr-only">asterisco</span> sono obbligatori. Il libro verrà pubblicato con la posizione approssimativa già impostata nel tuo profilo.</p>
+
+        <div class="form-card" style="max-width:38rem">
+            <div class="banner banner-error" id="form-error" hidden></div>
+            <div class="banner banner-success" id="form-success" hidden></div>
+            <form id="book-form" novalidate>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="title">Titolo <span aria-hidden="true">*</span></label>
+                        <input id="title" name="title" type="text" required>
+                    </div>
+                    <div class="field">
+                        <label for="author">Autore <span aria-hidden="true">*</span></label>
+                        <input id="author" name="author" type="text" required>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="year">Anno di pubblicazione</label>
+                        <input id="year" name="year" type="number" min="1400" max="2100">
+                    </div>
+                    <div class="field">
+                        <label for="publisher">Editore</label>
+                        <input id="publisher" name="publisher" type="text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="description">Descrizione / stato di conservazione</label>
+                    <textarea id="description" name="description" placeholder="Note sull'edizione, sottolineature, dediche…"></textarea>
+                </div>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="condizione">Condizione</label>
+                        <select id="condizione" name="condizione">
+                            <option value="nuovo">Nuovo</option>
+                            <option value="ottimo">Ottimo</option>
+                            <option value="buono" selected>Buono</option>
+                            <option value="discreto">Discreto</option>
+                            <option value="rovinato">Rovinato</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="lingua">Lingua</label>
+                        <select id="lingua" name="lingua">
+                            <option value="it" selected>Italiano</option>
+                            <option value="en">Inglese</option>
+                            <option value="fr">Francese</option>
+                            <option value="es">Spagnolo</option>
+                            <option value="de">Tedesco</option>
+                            <option value="altro">Altra lingua</option>
+                        </select>
+                    </div>
+                </div>
+
+                <fieldset id="categories-fieldset">
+                    <legend>Categorie</legend>
+                    <div id="categories-checkboxes" class="form-grid"></div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Disponibilità</legend>
+                    <div class="checkbox-row field">
+                        <input type="checkbox" id="disponibile_prestito" checked>
+                        <label for="disponibile_prestito" style="margin:0">Disponibile per il prestito</label>
+                    </div>
+                    <div class="checkbox-row field">
+                        <input type="checkbox" id="disponibile_consultazione" checked>
+                        <label for="disponibile_consultazione" style="margin:0">Disponibile per la sola consultazione</label>
+                    </div>
+                </fieldset>
+
+                <div class="field">
+                    <label for="cover">Immagine di copertina</label>
+                    <input id="cover" name="cover" type="file" accept="image/png, image/jpeg, image/webp">
+                    <p class="hint">JPEG, PNG o WebP, max 8 MB. Verrà generata automaticamente una miniatura per le anteprime.</p>
+                    <img id="cover-preview" class="thumb-preview" style="display:none; margin-top:0.6rem" alt="Anteprima della copertina attuale">
+                </div>
+
+                <button class="btn btn-primary" type="submit" id="submit-btn">Pubblica libro</button>
+            </form>
+        </div>
+    </div>
+</main>
+<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
+<script src="/js/api.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/pubblica.js"></script>
+</body>
+</html>

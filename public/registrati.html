@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrati — Biblioteca Diffusa</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contenuto principale</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/">Cerca libri</a>
+            <a href="/utenti-vicini.html">Utenti vicini</a>
+        </nav>
+        <div class="nav-user" id="nav-user-slot" aria-live="polite"></div>
+    </div>
+</header>
+<main id="main">
+    <div class="container">
+        <h1>Crea il tuo account</h1>
+        <div class="form-card" style="max-width:40rem">
+            <div class="banner banner-error" id="form-error" hidden></div>
+            <form id="register-form" novalidate>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="display_name">Nome visualizzato</label>
+                        <input id="display_name" name="display_name" type="text" required>
+                    </div>
+                    <div class="field">
+                        <label for="username">Nome utente</label>
+                        <input id="username" name="username" type="text" autocomplete="username" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" autocomplete="email" required>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+                    <p class="hint">Almeno 8 caratteri.</p>
+                </div>
+
+                <fieldset>
+                    <legend>Condivisione della posizione (facoltativa)</legend>
+                    <p class="hint">Serve per farti trovare da utenti vicini interessati a scambi o consultazioni. Puoi disattivarla in ogni momento dal tuo profilo. Se attiva, la posizione esatta non viene mai salvata: viene sempre approssimata al livello di precisione che scegli.</p>
+                    <div class="checkbox-row field">
+                        <input type="checkbox" id="share_location" name="share_location">
+                        <label for="share_location" style="margin:0">Condividi la mia posizione approssimativa con gli altri utenti</label>
+                    </div>
+                    <div id="location-options" hidden>
+                        <div class="field">
+                            <label for="location_precision">Livello di precisione mostrato agli altri</label>
+                            <select id="location_precision" name="location_precision">
+                                <option value="quartiere" selected>Quartiere (~600 m di margine casuale)</option>
+                                <option value="citta">Città (~3 km di margine casuale)</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="location_label">Etichetta di posizione (es. "Bari, Libertà")</label>
+                            <input id="location_label" name="location_label" type="text" placeholder="Città o quartiere">
+                        </div>
+                        <button class="btn btn-secondary btn-sm" type="button" id="locate-btn">Rileva posizione dal browser</button>
+                        <span class="hint" id="geo-status"></span>
+                    </div>
+                </fieldset>
+
+                <button class="btn btn-primary btn-block" type="submit">Crea account</button>
+            </form>
+            <p class="hint" style="margin-top:1rem">Hai già un account? <a href="/login.html">Accedi</a></p>
+        </div>
+    </div>
+</main>
+<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
+<script src="/js/api.js"></script>
+<script src="/js/nav.js"></script>
+<script>
+let coords = null;
+
+document.getElementById('share_location').addEventListener('change', (e) => {
+    document.getElementById('location-options').hidden = !e.target.checked;
+});
+
+document.getElementById('locate-btn').addEventListener('click', () => {
+    const status = document.getElementById('geo-status');
+    if (!navigator.geolocation) { status.textContent = 'Geolocalizzazione non supportata.'; return; }
+    status.textContent = 'Richiesta posizione al browser…';
+    navigator.geolocation.getCurrentPosition(
+        (pos) => { coords = { lat: pos.coords.latitude, lon: pos.coords.longitude }; status.textContent = 'Posizione rilevata ✓'; },
+        () => { status.textContent = 'Posizione non disponibile: puoi comunque registrarti senza condividerla.'; }
+    );
+});
+
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errorBox = document.getElementById('form-error');
+    errorBox.hidden = true;
+
+    const shareLocation = document.getElementById('share_location').checked;
+    if (shareLocation && !coords) {
+        errorBox.textContent = 'Per condividere la posizione devi prima rilevarla con il pulsante dedicato.';
+        errorBox.hidden = false;
+        return;
+    }
+
+    const payload = {
+        display_name: document.getElementById('display_name').value.trim(),
+        username: document.getElementById('username').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value,
+        share_location: shareLocation,
+        location_precision: document.getElementById('location_precision').value,
+        location_label: document.getElementById('location_label').value.trim() || null,
+        latitude: coords ? coords.lat : null,
+        longitude: coords ? coords.lon : null,
+    };
+
+    try {
+        await api.post('/api/auth/register', payload);
+        window.location.href = '/';
+    } catch (err) {
+        errorBox.textContent = err.message;
+        errorBox.hidden = false;
+    }
+});
+</script>
+</body>
+</html>

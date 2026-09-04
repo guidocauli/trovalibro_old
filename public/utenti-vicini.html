@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Utenti vicini — Biblioteca Diffusa</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contenuto principale</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/">Cerca libri</a>
+            <a href="/utenti-vicini.html" aria-current="page">Utenti vicini</a>
+        </nav>
+        <div class="nav-user" id="nav-user-slot" aria-live="polite"></div>
+    </div>
+</header>
+<main id="main">
+    <div class="container">
+        <h1>Utenti vicini</h1>
+        <p>Trova altri lettori che condividono la loro posizione approssimativa vicino a te, interessati a scambi o consultazioni.</p>
+
+        <div id="login-required" class="banner banner-info" hidden>Devi <a href="/login.html?redirect=/utenti-vicini.html">accedere</a> per usare questa funzione.</div>
+
+        <div id="nearby-app" hidden>
+            <div class="filters-bar">
+                <label for="radius">Raggio</label>
+                <select id="radius">
+                    <option value="1">entro 1 km</option>
+                    <option value="5" selected>entro 5 km</option>
+                    <option value="15">entro 15 km</option>
+                    <option value="50">entro 50 km</option>
+                </select>
+                <button class="btn btn-secondary btn-sm" id="locate-btn" type="button">Rileva la mia posizione</button>
+                <span class="hint" id="geo-status"></span>
+            </div>
+            <p class="results-count" id="results-count" aria-live="polite"></p>
+            <div id="users-list" class="book-grid"></div>
+        </div>
+    </div>
+</main>
+<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
+<script src="/js/api.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/utenti-vicini.js"></script>
+</body>
+</html>

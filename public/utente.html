@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Profilo utente — Biblioteca Diffusa</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contenuto principale</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/">Cerca libri</a>
+            <a href="/utenti-vicini.html">Utenti vicini</a>
+        </nav>
+        <div class="nav-user" id="nav-user-slot" aria-live="polite"></div>
+    </div>
+</header>
+<main id="main">
+    <div class="container">
+        <p><a href="/utenti-vicini.html">← Torna a utenti vicini</a></p>
+        <div id="profile-content"></div>
+        <section class="section" style="margin-top:2rem">
+            <h2>Libri pubblicati</h2>
+            <div id="user-books" class="book-grid"></div>
+        </section>
+    </div>
+</main>
+<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
+<script src="/js/api.js"></script>
+<script src="/js/nav.js"></script>
+<script>
+async function init() {
+    const id = new URLSearchParams(window.location.search).get('id');
+    if (!id) return;
+    const { user } = await api.get(`/api/users/${id}`);
+    document.title = `${user.display_name} — Biblioteca Diffusa`;
+    document.getElementById('page-title').textContent = `${user.display_name} — Biblioteca Diffusa`;
+    const initials = (user.display_name || '?').split(' ').map(s => s[0]).slice(0, 2).join('').toUpperCase();
+    document.getElementById('profile-content').innerHTML = `
+        <div class="owner-row">
+            <div class="avatar-circle" aria-hidden="true" style="width:64px;height:64px;font-size:1.4rem">${escapeHtml(initials)}</div>
+            <div>
+                <h1 style="margin-bottom:0.2rem">${escapeHtml(user.display_name)}</h1>
+                <p class="hint" style="margin:0">${escapeHtml(user.location_label || 'Posizione non condivisa')}</p>
+            </div>
+        </div>
+        ${user.bio ? `<p style="margin-top:1rem">${escapeHtml(user.bio)}</p>` : ''}
+    `;
+
+    const { books } = await api.get(`/api/books/search?q=`);
+    const userBooks = books.filter(b => b.owner_username === user.username);
+    const list = document.getElementById('user-books');
+    list.innerHTML = userBooks.length === 0
+        ? `<div class="empty-state">Nessun libro pubblicato al momento.</div>`
+        : userBooks.map(b => `
+            <a class="book-card" href="/libro.html?id=${b.id}">
+                <div class="book-card__cover" style="${b.thumb_path ? `background-image:url('${b.thumb_path}')` : ''}">
+                    ${b.thumb_path ? '' : `<span class="placeholder">${escapeHtml(b.title)}</span>`}
+                </div>
+                <div class="book-card__body">
+                    <div class="book-card__title">${escapeHtml(b.title)}</div>
+                    <div class="book-card__author">${escapeHtml(b.author)}</div>
+                </div>
+            </a>
+        `).join('');
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

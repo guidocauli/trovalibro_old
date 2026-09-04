@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accedi — Biblioteca Diffusa</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contenuto principale</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/">Cerca libri</a>
+            <a href="/utenti-vicini.html">Utenti vicini</a>
+        </nav>
+        <div class="nav-user" id="nav-user-slot" aria-live="polite"></div>
+    </div>
+</header>
+<main id="main">
+    <div class="container">
+        <h1>Accedi al tuo account</h1>
+        <div class="form-card">
+            <div class="banner banner-error" id="form-error" hidden></div>
+            <form id="login-form" novalidate>
+                <div class="field">
+                    <label for="identifier">Nome utente o email</label>
+                    <input id="identifier" name="identifier" type="text" autocomplete="username" required>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit">Accedi</button>
+            </form>
+            <p class="hint" style="margin-top:1rem">Non hai un account? <a href="/registrati.html">Registrati</a></p>
+            <p class="hint">Utenti demo: <em>giulia_r</em>, <em>marco_libri</em>, <em>elena_p</em>, <em>nicola_fq</em> — password <strong>Prova1234!</strong></p>
+        </div>
+    </div>
+</main>
+<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
+<script src="/js/api.js"></script>
+<script src="/js/nav.js"></script>
+<script>
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errorBox = document.getElementById('form-error');
+    errorBox.hidden = true;
+    const identifier = document.getElementById('identifier').value.trim();
+    const password = document.getElementById('password').value;
+    try {
+        await api.post('/api/auth/login', { identifier, password });
+        const params = new URLSearchParams(window.location.search);
+        window.location.href = params.get('redirect') || '/';
+    } catch (err) {
+        errorBox.textContent = err.message;
+        errorBox.hidden = false;
+    }
+});
+</script>
+</body>
+</html>

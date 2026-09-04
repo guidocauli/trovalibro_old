@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amministrazione — Biblioteca Diffusa</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contenuto principale</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/">Cerca libri</a>
+            <a href="/utenti-vicini.html">Utenti vicini</a>
+        </nav>
+        <div class="nav-user" id="nav-user-slot" aria-live="polite"></div>
+    </div>
+</header>
+<main id="main">
+    <div class="container">
+        <h1>Dashboard amministrativa</h1>
+        <div id="not-admin" class="banner banner-error" hidden>Questa sezione è riservata agli amministratori.</div>
+
+        <div id="admin-app" hidden>
+            <div class="stat-grid" id="totals-grid"></div>
+
+            <div class="two-col">
+                <div>
+                    <h2>Libri più visualizzati</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <caption class="sr-only">Classifica dei libri più visualizzati</caption>
+                            <thead><tr><th scope="col">Libro</th><th scope="col">Autore</th><th scope="col">Visualizzazioni</th></tr></thead>
+                            <tbody id="top-books-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h2>Distribuzione per categoria</h2>
+                    <div class="chart-wrap">
+                        <div class="bar-chart" id="category-chart" role="img" aria-label="Grafico a barre della distribuzione dei libri per categoria"></div>
+                        <div id="category-legend" style="margin-top:0.75rem; font-size:0.8rem; color:var(--ink-soft)"></div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Nuove registrazioni (ultimi 30 giorni)</h2>
+            <div class="chart-wrap">
+                <div class="bar-chart" id="signups-chart" role="img" aria-label="Grafico a barre delle nuove registrazioni giornaliere"></div>
+            </div>
+
+            <h2>Richieste di prestito per stato</h2>
+            <div class="table-wrap">
+                <table>
+                    <caption class="sr-only">Numero di richieste di prestito per ciascuno stato</caption>
+                    <thead><tr><th scope="col">Stato</th><th scope="col">Numero richieste</th></tr></thead>
+                    <tbody id="loans-status-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
+<script src="/js/api.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

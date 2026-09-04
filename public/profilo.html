@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il tuo profilo — Biblioteca Diffusa</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contenuto principale</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/">Cerca libri</a>
+            <a href="/utenti-vicini.html">Utenti vicini</a>
+        </nav>
+        <div class="nav-user" id="nav-user-slot" aria-live="polite"></div>
+    </div>
+</header>
+<main id="main">
+    <div class="container">
+        <h1>Il tuo profilo</h1>
+        <div class="two-col">
+            <section aria-labelledby="profile-heading">
+                <h2 id="profile-heading" class="sr-only">Dati del profilo</h2>
+                <div class="form-card">
+                    <div class="banner banner-error" id="form-error" hidden></div>
+                    <div class="banner banner-success" id="form-success" hidden></div>
+                    <form id="profile-form" novalidate>
+                        <div class="field">
+                            <label for="display_name">Nome visualizzato</label>
+                            <input id="display_name" name="display_name" type="text" required>
+                        </div>
+                        <div class="field">
+                            <label for="bio">Presentazione</label>
+                            <textarea id="bio" name="bio" placeholder="Racconta cosa colleziona la tua biblioteca…"></textarea>
+                        </div>
+                        <fieldset>
+                            <legend>Posizione e privacy</legend>
+                            <div class="checkbox-row field">
+                                <input type="checkbox" id="share_location" name="share_location">
+                                <label for="share_location" style="margin:0">Condividi la mia posizione approssimativa</label>
+                            </div>
+                            <div id="location-options">
+                                <div class="field">
+                                    <label for="location_precision">Precisione mostrata</label>
+                                    <select id="location_precision">
+                                        <option value="quartiere">Quartiere (~600 m di margine)</option>
+                                        <option value="citta">Città (~3 km di margine)</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <label for="location_label">Etichetta di posizione</label>
+                                    <input id="location_label" type="text" placeholder="es. Bari, Libertà">
+                                </div>
+                                <button class="btn btn-secondary btn-sm" type="button" id="locate-btn">Aggiorna posizione dal browser</button>
+                                <span class="hint" id="geo-status"></span>
+                            </div>
+                        </fieldset>
+                        <button class="btn btn-primary" type="submit">Salva modifiche</button>
+                    </form>
+                </div>
+            </section>
+
+            <section aria-labelledby="my-books-heading">
+                <h2 id="my-books-heading">I tuoi libri</h2>
+                <p><a class="btn btn-secondary btn-sm" href="/pubblica.html">+ Pubblica un nuovo libro</a></p>
+                <div id="my-books-list"></div>
+            </section>
+        </div>
+    </div>
+</main>
+<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
+<script src="/js/api.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/profilo.js"></script>
+</body>
+</html>

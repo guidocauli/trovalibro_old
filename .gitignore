@@ -1,0 +1,9 @@
+node_modules/
+db/*.db
+db/*.db-journal
+uploads/covers/*
+uploads/thumbs/*
+!uploads/covers/.gitkeep
+!uploads/thumbs/.gitkeep
+.env
+*.log

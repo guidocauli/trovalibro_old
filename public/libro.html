@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Dettaglio libro — Biblioteca Diffusa</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contenuto principale</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/">Cerca libri</a>
+            <a href="/utenti-vicini.html">Utenti vicini</a>
+        </nav>
+        <div class="nav-user" id="nav-user-slot" aria-live="polite"></div>
+    </div>
+</header>
+<main id="main">
+    <div class="container">
+        <div class="banner banner-success" id="published-banner" hidden>Il libro è stato pubblicato con successo ed è ora visibile nella ricerca.</div>
+        <p><a href="/">← Torna alla ricerca</a></p>
+        <div id="book-content"></div>
+
+        <section class="section" id="loan-section" style="display:none">
+            <h2>Richiedi prestito o consultazione</h2>
+            <div class="form-card">
+                <div class="banner banner-error" id="loan-error" hidden></div>
+                <div class="banner banner-success" id="loan-success" hidden></div>
+                <form id="loan-form">
+                    <fieldset style="border:none;padding:0;margin:0 0 1rem">
+                        <legend class="sr-only">Tipo di richiesta</legend>
+                        <div class="checkbox-row">
+                            <input type="radio" id="tipo-prestito" name="tipo" value="prestito" checked>
+                            <label for="tipo-prestito" style="margin:0">Prestito</label>
+                        </div>
+                        <div class="checkbox-row">
+                            <input type="radio" id="tipo-consultazione" name="tipo" value="consultazione">
+                            <label for="tipo-consultazione" style="margin:0">Consultazione sul posto</label>
+                        </div>
+                    </fieldset>
+                    <div class="field">
+                        <label for="messaggio">Messaggio per il proprietario</label>
+                        <textarea id="messaggio" placeholder="Scrivi due righe per presentarti e proporre un appuntamento…"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Invia richiesta (simulata)</button>
+                    <p class="hint">Questa è una richiesta simulata a fini dimostrativi: non genera notifiche reali né gestisce la logistica del prestito.</p>
+                </form>
+            </div>
+        </section>
+
+        <section class="section" id="owner-requests-section" style="display:none">
+            <h2>Richieste ricevute per questo libro</h2>
+            <div id="owner-requests-list"></div>
+        </section>
+
+        <section class="section" aria-labelledby="suggestions-heading">
+            <h2 id="suggestions-heading">Suggerimenti e note della community</h2>
+            <div id="suggestions-list"></div>
+            <div class="form-card" id="suggestion-form-card" style="margin-top:1rem">
+                <form id="suggestion-form">
+                    <div class="field">
+                        <label for="suggestion-text">Lascia un suggerimento su questo libro</label>
+                        <textarea id="suggestion-text" placeholder="Es. un'edizione simile, un consiglio di lettura correlato…"></textarea>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" type="submit">Pubblica suggerimento</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</main>
+<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
+<script src="/js/api.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/libro.js"></script>
+</body>
+</html>

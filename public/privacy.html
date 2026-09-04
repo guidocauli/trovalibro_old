@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informativa privacy — Biblioteca Diffusa</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contenuto principale</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/">Cerca libri</a>
+            <a href="/utenti-vicini.html">Utenti vicini</a>
+        </nav>
+        <div class="nav-user" id="nav-user-slot" aria-live="polite"></div>
+    </div>
+</header>
+<main id="main">
+    <div class="container" style="max-width:68ch">
+        <h1>Informativa privacy (prototipo didattico)</h1>
+        <p>Questa pagina descrive, in forma semplificata, come il prototipo tratta i dati personali. Non sostituisce un'informativa ex art. 13 GDPR redatta per un servizio in produzione.</p>
+
+        <h2>Dati raccolti</h2>
+        <p>Nome utente, email, password (memorizzata come hash), nome visualizzato, biografia facoltativa, e — solo su consenso esplicito — una posizione geografica approssimata.</p>
+
+        <h2>Geolocalizzazione</h2>
+        <p>La posizione non è mai richiesta automaticamente: viene acquisita solo quando l'utente preme esplicitamente "Rileva posizione" e concede il permesso al browser. Se l'utente sceglie di condividerla con altri utenti, le coordinate esatte non vengono mai salvate: il server applica uno scostamento casuale (jitter) di circa 600 metri (precisione "quartiere") o 3 km (precisione "città") prima di scriverle nel database. Le coordinate esatte di un altro utente non sono mai restituite dalle API: solo la distanza calcolata e un'etichetta testuale facoltativa.</p>
+
+        <h2>Immagini caricate</h2>
+        <p>Le copertine caricate vengono ridimensionate e ricodificate lato server prima di essere salvate; il file originale non viene conservato.</p>
+
+        <h2>Statistiche d'uso</h2>
+        <p>Le visualizzazioni delle schede libro sono registrate in forma aggregata, associate a un identificativo di sessione anonimo se l'utente non è autenticato, per permettere ai proprietari dei libri di consultare l'andamento delle proprie pubblicazioni.</p>
+
+        <h2>Diritti dell'utente</h2>
+        <p>Dal proprio profilo, l'utente può in ogni momento disattivare la condivisione della posizione (le coordinate salvate vengono eliminate) e rimuovere i libri pubblicati.</p>
+    </div>
+</main>
+<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico.</p></div></footer>
+<script src="/js/api.js"></script>
+<script src="/js/nav.js"></script>
+</body>
+</html>
