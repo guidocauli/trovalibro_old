@@ -1,4 +1,4 @@
-# Biblioteca Diffusa
+# TrovaLibro — Biblioteca Diffusa
 
 Prototipo di piattaforma web di geolocalizzazione culturale per la condivisione di
 patrimoni librari privati (collezioni, biblioteche domestiche, raccolte tematiche).

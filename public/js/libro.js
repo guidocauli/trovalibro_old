@@ -6,8 +6,8 @@ function conditionLabel(c) {
 const statusLabel = { in_attesa: 'In attesa', accettata: 'Accettata', rifiutata: 'Rifiutata', completata: 'Completata', annullata: 'Annullata' };
 
 function renderBook(book) {
-    document.title = `${book.title} — Biblioteca Diffusa`;
-    document.getElementById('page-title').textContent = `${book.title} — Biblioteca Diffusa`;
+    document.title = `${book.title} — TrovaLibro`;
+    document.getElementById('page-title').textContent = `${book.title} — TrovaLibro`;
     const initials = (book.owner_name || '?').split(' ').map(s => s[0]).slice(0, 2).join('').toUpperCase();
 
     document.getElementById('book-content').innerHTML = `

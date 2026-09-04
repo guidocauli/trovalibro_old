@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="page-title">Profilo utente — Biblioteca Diffusa</title>
+<title id="page-title">Profilo utente — TrovaLibro</title>
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Salta al contenuto principale</a>
 <header class="site-header">
     <div class="container">
-        <a class="brand" href="/">Biblioteca Diffusa <small>Bari e dintorni</small></a>
+        <a class="brand" href="/">TrovaLibro <small>Biblioteca Diffusa · Bari e dintorni</small></a>
         <nav class="main-nav" aria-label="Navigazione principale">
             <a href="/">Cerca libri</a>
             <a href="/utenti-vicini.html">Utenti vicini</a>
@@ -28,7 +28,7 @@
         </section>
     </div>
 </main>
-<footer class="site-footer"><div class="container"><p>Biblioteca Diffusa — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
+<footer class="site-footer"><div class="container"><p>TrovaLibro — prototipo didattico. <a href="/privacy.html">Informativa privacy</a></p></div></footer>
 <script src="/js/api.js"></script>
 <script src="/js/nav.js"></script>
 <script>
@@ -36,8 +36,8 @@ async function init() {
     const id = new URLSearchParams(window.location.search).get('id');
     if (!id) return;
     const { user } = await api.get(`/api/users/${id}`);
-    document.title = `${user.display_name} — Biblioteca Diffusa`;
-    document.getElementById('page-title').textContent = `${user.display_name} — Biblioteca Diffusa`;
+    document.title = `${user.display_name} — TrovaLibro`;
+    document.getElementById('page-title').textContent = `${user.display_name} — TrovaLibro`;
     const initials = (user.display_name || '?').split(' ').map(s => s[0]).slice(0, 2).join('').toUpperCase();
     document.getElementById('profile-content').innerHTML = `
         <div class="owner-row">

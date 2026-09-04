@@ -1,7 +1,7 @@
 {
-  "name": "biblioteca-diffusa",
+  "name": "trovalibro-biblioteca-diffusa",
   "version": "1.0.0",
-  "description": "Prototipo di piattaforma di geolocalizzazione culturale per la condivisione di patrimoni librari privati",
+  "description": "TrovaLibro (Biblioteca Diffusa) — prototipo di piattaforma di geolocalizzazione culturale per la condivisione di patrimoni librari privati",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
