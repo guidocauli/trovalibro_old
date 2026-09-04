@@ -50,6 +50,19 @@ Se si preferisce un database vuoto (senza dati di esempio), è sufficiente
 eseguire `npm start` direttamente: il database e lo schema vengono creati
 automaticamente al primo avvio.
 
+### Manutenzione: pulizia delle entry orfane
+
+Se il database viene modificato al di fuori dell'applicazione (es. con il
+client `sqlite3` da riga di comando, che di default non applica i vincoli di
+integrità referenziale), è possibile che restino righe "orfane" — libri il
+cui proprietario non esiste più, richieste di prestito collegate a utenti o
+libri cancellati, ecc. Uno script dedicato individua e rimuove questi casi:
+
+```bash
+npm run cleanup-orphans -- --dry-run   # mostra cosa verrebbe rimosso, senza modificare nulla
+npm run cleanup-orphans                # esegue la pulizia
+```
+
 ### Credenziali demo (create da `npm run seed`)
 
 | Utente         | Ruolo   | Password      |
