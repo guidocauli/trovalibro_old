@@ -109,15 +109,15 @@ router.delete('/me', requireAuth, async (req, res) => {
     }
 
     const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.session.userId);
+
+    // Gli account amministratore non possono autoeliminarsi in nessun caso,
+    // indipendentemente dal numero di altri amministratori presenti.
+    if (user.role === 'admin') {
+        return res.status(403).json({ error: 'Gli account amministratore non possono essere eliminati autonomamente. Se necessario, chiedi a un altro amministratore di eliminare il tuo account dal pannello di gestione utenti.' });
+    }
+
     const ok = await bcrypt.compare(password, user.password_hash);
     if (!ok) return res.status(401).json({ error: 'Password non corretta.' });
-
-    if (user.role === 'admin') {
-        const adminCount = db.prepare(`SELECT COUNT(*) AS n FROM users WHERE role = 'admin'`).get().n;
-        if (adminCount <= 1) {
-            return res.status(400).json({ error: 'Non puoi eliminare il tuo account: sei l\'unico amministratore rimasto.' });
-        }
-    }
 
     const images = db.prepare('SELECT cover_path, thumb_path FROM books WHERE owner_id = ?').all(user.id);
 

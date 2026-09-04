@@ -49,11 +49,43 @@ async function loadMyBooks() {
     });
 }
 
+function setupDeleteAccountSection(user) {
+    const form = document.getElementById('delete-account-form');
+    if (user.role === 'admin') {
+        form.hidden = true;
+        const notice = document.createElement('p');
+        notice.className = 'banner banner-info';
+        notice.textContent = 'Gli account amministratore non possono essere eliminati autonomamente. Se necessario, chiedi a un altro amministratore di eliminare il tuo account dal pannello di gestione utenti.';
+        form.insertAdjacentElement('afterend', notice);
+        return;
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errorBox = document.getElementById('delete-account-error');
+        errorBox.hidden = true;
+
+        if (!confirm('Sei sicuro di voler eliminare definitivamente il tuo account e tutti i libri pubblicati? L\'operazione non è reversibile.')) {
+            return;
+        }
+
+        const password = document.getElementById('delete_password').value;
+        try {
+            await api.request('DELETE', '/api/users/me', { password });
+            window.location.href = '/';
+        } catch (err) {
+            errorBox.textContent = err.message;
+            errorBox.hidden = false;
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     const user = await requireLogin();
     if (!user) return;
     fillForm(user);
     loadMyBooks();
+    setupDeleteAccountSection(user);
 
     document.getElementById('share_location').addEventListener('change', (e) => {
         document.getElementById('location-options').style.display = e.target.checked ? 'block' : 'none';
@@ -122,22 +154,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    document.getElementById('delete-account-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const errorBox = document.getElementById('delete-account-error');
-        errorBox.hidden = true;
-
-        if (!confirm('Sei sicuro di voler eliminare definitivamente il tuo account e tutti i libri pubblicati? L\'operazione non è reversibile.')) {
-            return;
-        }
-
-        const password = document.getElementById('delete_password').value;
-        try {
-            await api.request('DELETE', '/api/users/me', { password });
-            window.location.href = '/';
-        } catch (err) {
-            errorBox.textContent = err.message;
-            errorBox.hidden = false;
-        }
-    });
 });
