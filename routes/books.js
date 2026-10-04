@@ -1,8 +1,8 @@
 const express = require('express');
 const crypto = require('crypto');
 const db = require('../db/database');
-const { requireAuth } = require('../middleware/auth');
-const { upload, processCoverImage, deleteImageIfExists } = require('../middleware/upload');
+const { requireAuth } = require('../auth');
+const { upload, processCoverImage, deleteImageIfExists } = require('../upload');
 
 const router = express.Router();
 

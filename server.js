@@ -8,7 +8,7 @@ const userRoutes = require('./routes/users');
 const bookRoutes = require('./routes/books');
 const statsRoutes = require('./routes/stats');
 const adminRoutes = require('./routes/admin');
-const { attachSession } = require('./middleware/auth');
+const { attachSession } = require('./auth');
 
 require('./db/database'); // apre/inizializza il DB al boot
 

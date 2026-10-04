@@ -1,8 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const db = require('../db/database');
-const { requireAuth, requireAdmin } = require('../middleware/auth');
-const { deleteImageIfExists } = require('../middleware/upload');
+const { requireAuth, requireAdmin } = require('../auth');
+const { deleteImageIfExists } = require('../upload');
 
 const router = express.Router();
 const SALT_ROUNDS = 11;

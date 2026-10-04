@@ -83,14 +83,13 @@ biblioteca-diffusa/
 │   ├── database.js       # connessione condivisa + inizializzazione lazy
 │   ├── init.js            # inizializzazione esplicita dello schema
 │   └── seed.js            # popolamento con dati di test
-├── middleware/
-│   ├── auth.js             # middleware di autenticazione/autorizzazione
-│   └── upload.js           # gestione upload + generazione miniature
 ├── routes/
 │   ├── auth.js              # registrazione, login, logout, sessione
 │   ├── users.js             # profilo, consenso posizione, utenti limitrofi
 │   ├── books.js              # CRUD libri, ricerca, prestiti, suggerimenti
 │   └── stats.js               # statistiche personali e dashboard admin
+├── auth.js                       # middleware di autenticazione/autorizzazione
+├── upload.js                     # gestione upload + generazione miniature
 ├── utils/geo.js                # Haversine, bounding box, offuscamento coordinate
 ├── public/                      # frontend statico (HTML/CSS/JS commentati)
 │   ├── css/style.css

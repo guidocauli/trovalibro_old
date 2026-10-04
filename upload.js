@@ -7,8 +7,8 @@ const multer = require('multer');
 const sharp = require('sharp');
 const crypto = require('crypto');
 
-const COVERS_DIR = path.join(__dirname, '..', 'uploads', 'covers');
-const THUMBS_DIR = path.join(__dirname, '..', 'uploads', 'thumbs');
+const COVERS_DIR = path.join(__dirname, 'uploads', 'covers');
+const THUMBS_DIR = path.join(__dirname, 'uploads', 'thumbs');
 
 const MAX_SIZE_BYTES = 8 * 1024 * 1024; // 8 MB
 const ALLOWED_MIME = ['image/jpeg', 'image/png', 'image/webp'];
@@ -61,7 +61,7 @@ async function processCoverImage(buffer) {
 
 function deleteImageIfExists(relativePath) {
     if (!relativePath) return;
-    const abs = path.join(__dirname, '..', relativePath.replace(/^\//, ''));
+    const abs = path.join(__dirname, relativePath.replace(/^\//, ''));
     fs.unlink(abs, () => {}); // best-effort, ignora errori (file già assente)
 }
 

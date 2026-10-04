@@ -15,7 +15,7 @@
 //   node db/cleanup-orphans.js --dry-run  # mostra solo cosa verrebbe rimosso, senza modificare nulla
 
 const db = require('./database');
-const { deleteImageIfExists } = require('../middleware/upload');
+const { deleteImageIfExists } = require('../upload');
 
 const dryRun = process.argv.includes('--dry-run');
 
