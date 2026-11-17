@@ -24,13 +24,13 @@
         <p>Questa pagina descrive, in forma semplificata, come il prototipo tratta i dati personali. Non sostituisce un'informativa ex art. 13 GDPR redatta per un servizio in produzione.</p>
 
         <h2>Dati raccolti</h2>
-        <p>Nome utente, email, password (memorizzata come hash), nome visualizzato, biografia facoltativa, e — solo su consenso esplicito — una posizione geografica approssimata.</p>
+        <p>Nome utente, email, password (memorizzata come hash), nome visualizzato, biografia facoltativa, e solo con consenso esplicito una posizione geografica approssimata.</p>
 
         <h2>Geolocalizzazione</h2>
-        <p>La posizione non è mai richiesta automaticamente: viene acquisita solo quando l'utente preme esplicitamente "Rileva posizione" e concede il permesso al browser. Se l'utente sceglie di condividerla con altri utenti, le coordinate esatte non vengono mai salvate: il server applica uno scostamento casuale (jitter) di circa 600 metri (precisione "quartiere") o 3 km (precisione "città") prima di scriverle nel database. Le coordinate esatte di un altro utente non sono mai restituite dalle API: solo la distanza calcolata e un'etichetta testuale facoltativa.</p>
+        <p>La posizione non è mai richiesta automaticamente: viene acquisita solo quando l'utente preme "Rileva posizione" e concede il permesso al browser. Se l'utente sceglie di condividerla con altri utenti, le coordinate esatte non vengono mai salvate: il server applica uno scostamento casuale (detto 'jitter') di circa 600 metri (precisione "quartiere") o di 3 km (precisione "città") prima di scriverle nel database. Le coordinate esatte di un altro utente non sono mai restituite dalle API: solo la distanza calcolata e un'etichetta testuale facoltativa.</p>
 
         <h2>Immagini caricate</h2>
-        <p>Le copertine caricate vengono ridimensionate e ricodificate lato server prima di essere salvate; il file originale non viene conservato.</p>
+        <p>Le copertine caricate vengono ridimensionate e ricodificate lato server prima di essere salvate; il file originale non viene mai conservato.</p>
 
         <h2>Statistiche d'uso</h2>
         <p>Le visualizzazioni delle schede libro sono registrate in forma aggregata, associate a un identificativo di sessione anonimo se l'utente non è autenticato, per permettere ai proprietari dei libri di consultare l'andamento delle proprie pubblicazioni.</p>
@@ -39,7 +39,7 @@
         <p>Dal proprio profilo, l'utente può in ogni momento disattivare la condivisione della posizione (le coordinate salvate vengono eliminate) e rimuovere i libri pubblicati.</p>
     </div>
 </main>
-<footer class="site-footer"><div class="container"><p>TrovaLibro — prototipo didattico.</p></div></footer>
+<footer class="site-footer"><div class="container"><p>Trovalibro - Project Work - Di Guido Cauli <guido.cauli@gmail.com>.</p></div></footer>
 <script src="/js/api.js"></script>
 <script src="/js/nav.js"></script>
 </body>

@@ -1,6 +1,7 @@
+// TrovaLibro - Biblioteca Diffusa - Guido Cauli <guido.cauli@gmail.com>
 let newCoords = null;
 
-function conditionLabel(c) {
+function etichettaCondizione(c) {
     return { nuovo: 'Nuovo', ottimo: 'Ottimo', buono: 'Buono', discreto: 'Discreto', rovinato: 'Rovinato' }[c] || c;
 }
 
@@ -33,11 +34,11 @@ async function loadMyBooks() {
         <div class="loan-request">
             <div class="loan-request__head">
                 <strong><a href="/libro.html?id=${b.id}">${escapeHtml(b.title)}</a></strong>
-                <span class="badge">${conditionLabel(b.condizione)}</span>
+                <span class="badge">${etichettaCondizione(b.condizione)}</span>
             </div>
             <p class="hint" style="margin:0.4rem 0">${escapeHtml(b.author)}${b.year ? ' · ' + b.year : ''} — stato: ${b.status}</p>
-            <a class="btn btn-ghost btn-sm" href="/pubblica.html?edit=${b.id}">Modifica</a>
-            <button class="btn btn-ghost btn-sm" data-delete="${b.id}" type="button">Rimuovi</button>
+            <a class="btn btn-disab btn-sm" href="/pubblica.html?edit=${b.id}">Modifica</a>
+            <button class="btn btn-disab btn-sm" data-delete="${b.id}" type="button">Rimuovi</button>
         </div>
     `).join('');
 
@@ -50,7 +51,7 @@ async function loadMyBooks() {
     });
 }
 
-function setupDeleteAccountSection(user) {
+function setupElimina(user) {
     const form = document.getElementById('delete-account-form');
     if (user.role === 'admin') {
         form.hidden = true;
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!user) return;
     fillForm(user);
     loadMyBooks();
-    setupDeleteAccountSection(user);
+    setupElimina(user);
 
     document.getElementById('share_location').addEventListener('change', (e) => {
         document.getElementById('location-options').style.display = e.target.checked ? 'block' : 'none';

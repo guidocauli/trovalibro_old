@@ -1,4 +1,5 @@
-function renderBarChart(containerId, data) {
+// TrovaLibro - Biblioteca Diffusa - Guido Cauli <guido.cauli@gmail.com>
+function disegnaGrafico(containerId, data) {
     // data: array di { day, n }. Grafico a barre realizzato in puro CSS
     // (nessuna libreria esterna): ogni barra ha altezza proporzionale al
     // massimo della serie. Ordiniamo dal più vecchio al più recente.
@@ -28,7 +29,7 @@ async function loadDetail(bookId, title) {
         <div class="stat-card"><div class="value">${stats.unique_viewers}</div><div class="label">Visitatori unici</div></div>
         <div class="stat-card"><div class="value">${stats.suggestions_count}</div><div class="label">Suggerimenti ricevuti</div></div>
     `;
-    renderBarChart('views-chart', stats.views_by_day);
+    disegnaGrafico('views-chart', stats.views_by_day);
 }
 
 async function init() {
@@ -52,7 +53,7 @@ async function init() {
             <td>${escapeHtml(b.title)}</td>
             <td>${b.views}</td>
             <td>${b.loan_requests}</td>
-            <td><button class="btn btn-ghost btn-sm" data-id="${b.id}" data-title="${escapeHtml(b.title)}" type="button">Vedi dettaglio</button></td>
+            <td><button class="btn btn-disab btn-sm" data-id="${b.id}" data-title="${escapeHtml(b.title)}" type="button">Vedi dettaglio</button></td>
         </tr>
     `).join('');
     tbody.querySelectorAll('button[data-id]').forEach(btn => {

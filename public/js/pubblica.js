@@ -1,3 +1,4 @@
+// TrovaLibro - Biblioteca Diffusa - Guido Cauli <guido.cauli@gmail.com>
 const editId = new URLSearchParams(window.location.search).get('edit');
 let allCategories = [];
 
@@ -7,7 +8,7 @@ async function requireLogin() {
     return user;
 }
 
-async function loadCategoryCheckboxes(selectedIds = []) {
+async function caricaCategorie(selectedIds = []) {
     const { categories } = await api.get('/api/books/categories');
     allCategories = categories;
     const wrap = document.getElementById('categories-checkboxes');
@@ -19,7 +20,7 @@ async function loadCategoryCheckboxes(selectedIds = []) {
     `).join('');
 }
 
-function selectedCategoryIds() {
+function catSelezionate() {
     return allCategories
         .map(c => c.id)
         .filter(id => document.getElementById(`cat-${id}`)?.checked);
@@ -43,7 +44,7 @@ async function loadForEdit(id) {
         img.src = book.thumb_path;
         img.style.display = 'block';
     }
-    await loadCategoryCheckboxes(book.categories.map(c => c.id));
+    await caricaCategorie(book.categories.map(c => c.id));
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -53,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (editId) {
         await loadForEdit(editId);
     } else {
-        await loadCategoryCheckboxes();
+        await caricaCategorie();
     }
 
     document.getElementById('book-form').addEventListener('submit', async (e) => {
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         formData.set('lingua', document.getElementById('lingua').value);
         formData.set('disponibile_prestito', document.getElementById('disponibile_prestito').checked ? '1' : '0');
         formData.set('disponibile_consultazione', document.getElementById('disponibile_consultazione').checked ? '1' : '0');
-        formData.set('category_ids', JSON.stringify(selectedCategoryIds()));
+        formData.set('category_ids', JSON.stringify(catSelezionate()));
         const coverFile = document.getElementById('cover').files[0];
         if (coverFile) formData.set('cover', coverFile);
 

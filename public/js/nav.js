@@ -1,3 +1,4 @@
+// TrovaLibro - Biblioteca Diffusa - Guido Cauli <guido.cauli@gmail.com>
 // Aggiorna l'intestazione (login/registrazione vs profilo/logout) in base
 // alla sessione corrente. Incluso in tutte le pagine dopo api.js.
 async function initNav() {
@@ -12,7 +13,7 @@ async function initNav() {
                 <a class="btn btn-secondary btn-sm" href="/pubblica.html">Pubblica un libro</a>
                 <a class="btn btn-secondary btn-sm" href="/dashboard.html">Statistiche</a>
                 ${user.role === 'admin' ? '<a class="btn btn-secondary btn-sm" href="/admin.html">Amministrazione</a>' : ''}
-                <button class="btn btn-ghost btn-sm" id="logout-btn" type="button">Esci</button>
+                <button class="btn btn-disab btn-sm" id="logout-btn" type="button">Esci</button>
             `;
             document.getElementById('logout-btn').addEventListener('click', async () => {
                 await api.post('/api/auth/logout');

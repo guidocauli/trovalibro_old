@@ -21,69 +21,67 @@
     </div>
 </header>
 
-<section class="hero">
+<section class="cerca">
     <div class="container">
-        <h1>Il patrimonio librario del tuo quartiere, a portata di mano</h1>
+        <h1>Il patrimonio librario del tuo quartiere</h1>
         <p>Cerca tra i libri condivisi dagli abitanti della tua zona: titoli, autori e categorie, con la possibilità di individuare chi ha volumi vicino a te.</p>
         <form class="search-bar" id="search-form" role="search" aria-label="Ricerca libri">
-            <label class="sr-only" for="q">Titolo, autore o parola chiave</label>
+            <label class="sr-only" for="q">Titolo, autore, parola chiave</label>
             <input type="search" id="q" name="q" placeholder="Titolo, autore o parola chiave…">
             <label class="sr-only" for="category">Categoria</label>
             <select id="category" name="category">
                 <option value="">Tutte le categorie</option>
             </select>
-            <button class="btn btn-primary" type="submit">Cerca</button>
+            <button class="btn btn-primary" type="submit">Cerca</button>  
         </form>
-    </div>
+    </div> 
 </section>
 
-<main id="main">
-    <div class="container">
-        <div class="filters-bar">
-            <div>
-                <label for="radius">Raggio di ricerca</label>
-                <select id="radius">
-                    <option value="">Nessun filtro di distanza</option>
-                    <option value="1">entro 1 km</option>
-                    <option value="5" selected>entro 5 km</option>
-                    <option value="10">entro 10 km</option>
-                    <option value="25">entro 25 km</option>
-                </select>
-            </div>
-            <div>
-                <label for="condizione">Condizione</label>
-                <select id="condizione">
-                    <option value="">Qualsiasi</option>
-                    <option value="nuovo">Nuovo</option>
-                    <option value="ottimo">Ottimo</option>
-                    <option value="buono">Buono</option>
-                    <option value="discreto">Discreto</option>
-                    <option value="rovinato">Rovinato</option>
-                </select>
-            </div>
-            <button class="btn btn-secondary btn-sm" id="locate-btn" type="button">Usa la mia posizione</button>
-            <span class="hint" id="geo-status"></span>
-        </div>
+<main id="main"> 
+ <div class="container">
+ <div class="filters-bar">
+   <div>
+     <label for="radius">Raggio di ricerca</label>
+     <select id="radius">
+       <option value="">Nessun limite di distanza</option>
+       <option value="1">entro 1 km</option>
+       <option value="5" selected>entro 5 km</option>
+       <option value="10">entro 10 km</option>
+       <option value="25">entro 25 km</option>
+      </select>
+   </div>
+  <div>
+    <label for="condizione">Condizione</label>
+      <select id="condizione">
+       <option value="">Qualsiasi</option>
+       <option value="nuovo">Nuovo</option>
+       <option value="ottimo">Ottimo</option>
+       <option value="buono">Buono</option>
+       <option value="discreto">Discreto</option>
+       <option value="rovinato">Rovinato</option>
+    </select>
+ </div>
+     <button class="btn btn-secondary btn-sm" id="locate-btn" type="button">Usa la mia posizione</button>
+     <span class="hint" id="geo-status"></span>
+  </div>
 
-        <div class="banner banner-info" id="geo-consent-banner" hidden>
-            La geolocalizzazione richiede il tuo consenso esplicito dal browser: verrà usata solo per calcolare le distanze, non verrà salvata sul server a meno che tu non la condivida esplicitamente dal tuo profilo.
-        </div>
-
-        <p class="results-count" id="results-count" aria-live="polite">Caricamento dei libri in corso…</p>
-
-        <div class="search-layout">
-            <div id="book-list" class="book-grid" aria-label="Risultati della ricerca"></div>
-            <div>
-                <div id="map" role="img" aria-label="Mappa con la posizione approssimativa dei libri trovati"></div>
-            </div>
-        </div>
-    </div>
+ <div class="banner banner-info" id="geo-consent-banner" hidden>La geolocalizzazione richiede il consenso esplicito dal browser: verrà usata solo per calcolare le distanze, non verrà salvata sul server a meno che tu non la condivida esplicitamente dal tuo profilo.</div>
+  <p class="results-count" id="results-count" aria-live="polite">Caricamento dei libri in corso…</p>
+  <div class="search-layout">
+  <div id="book-list" class="book-grid" aria-label="Risultati della ricerca"></div>
+  <div>
+   <div id="map" role="img" aria-label="Mappa con la posizione approssimativa dei libri trovati"></div>
+  </div>
+ </div>
+</div>
 </main>
 
+
+
 <footer class="site-footer">
-    <div class="container">
-        <p>TrovaLibro — prototipo didattico. Dati di esempio. <a href="/privacy.html">Informativa privacy</a></p>
-    </div>
+  <div class="container">
+    <p>Trovalibro - Project Work - Di Guido Cauli <guido.cauli@gmail.com>. Dati di esempio. <a href="/privacy.html">Informativa privacy</a></p>
+  </div>
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>

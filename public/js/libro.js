@@ -1,6 +1,7 @@
+// TrovaLibro - Biblioteca Diffusa - Guido Cauli <guido.cauli@gmail.com>
 const bookId = new URLSearchParams(window.location.search).get('id');
 
-function conditionLabel(c) {
+function etichettaCondizione(c) {
     return { nuovo: 'Nuovo', ottimo: 'Ottimo', buono: 'Buono', discreto: 'Discreto', rovinato: 'Rovinato' }[c] || c;
 }
 const statusLabel = { in_attesa: 'In attesa', accettata: 'Accettata', rifiutata: 'Rifiutata', completata: 'Completata', annullata: 'Annullata' };
@@ -21,7 +22,7 @@ function renderBook(book) {
                 <h1>${escapeHtml(book.title)}</h1>
                 <p class="book-card__author" style="font-size:1.05rem">${escapeHtml(book.author)}${book.year ? ' · ' + book.year : ''}${book.publisher ? ' · ' + escapeHtml(book.publisher) : ''}</p>
                 <div class="tag-list">
-                    <span class="badge">${conditionLabel(book.condizione)}</span>
+                    <span class="badge">${etichettaCondizione(book.condizione)}</span>
                     ${book.disponibile_prestito ? '<span class="tag">Disponibile per il prestito</span>' : ''}
                     ${book.disponibile_consultazione ? '<span class="tag">Disponibile per consultazione</span>' : ''}
                     ${(book.categories || []).map(c => `<span class="tag">${escapeHtml(c.name)}</span>`).join('')}
@@ -42,7 +43,7 @@ function renderBook(book) {
     `;
 }
 
-function renderSuggestions(suggestions) {
+function mostraSuggerimenti(suggestions) {
     const list = document.getElementById('suggestions-list');
     if (suggestions.length === 0) {
         list.innerHTML = `<p class="hint">Nessun suggerimento ancora. Sii il primo a lasciarne uno.</p>`;
@@ -59,7 +60,7 @@ function renderSuggestions(suggestions) {
     `).join('');
 }
 
-async function loadOwnerRequests(id) {
+async function caricaRichieste(id) {
     try {
         const { requests } = await api.get(`/api/books/${id}/loan-requests`);
         const section = document.getElementById('owner-requests-section');
@@ -79,14 +80,14 @@ async function loadOwnerRequests(id) {
                 ${r.messaggio ? `<p style="margin:0.3rem 0">${escapeHtml(r.messaggio)}</p>` : ''}
                 ${r.stato === 'in_attesa' ? `
                     <button class="btn btn-secondary btn-sm" data-status="accettata" data-id="${r.id}" type="button">Accetta</button>
-                    <button class="btn btn-ghost btn-sm" data-status="rifiutata" data-id="${r.id}" type="button">Rifiuta</button>
+                    <button class="btn btn-disab btn-sm" data-status="rifiutata" data-id="${r.id}" type="button">Rifiuta</button>
                 ` : ''}
             </div>
         `).join('');
         list.querySelectorAll('[data-status]').forEach(btn => {
             btn.addEventListener('click', async () => {
                 await api.put(`/api/books/loan-requests/${btn.dataset.id}/status`, { stato: btn.dataset.status });
-                loadOwnerRequests(id);
+                caricaRichieste(id);
             });
         });
     } catch { /* non proprietario: nessuna azione */ }
@@ -100,14 +101,14 @@ async function init() {
 
     const { book, suggestions } = await api.get(`/api/books/${bookId}`);
     renderBook(book);
-    renderSuggestions(suggestions);
+    mostraSuggerimenti(suggestions);
 
     const { user } = await api.get('/api/auth/me');
     if (user && user.id !== book.owner_id) {
         document.getElementById('loan-section').style.display = 'block';
     }
     if (user && user.id === book.owner_id) {
-        loadOwnerRequests(bookId);
+        caricaRichieste(bookId);
     }
     if (!user) {
         document.getElementById('suggestion-form-card').innerHTML = `<p class="hint"><a href="/login.html?redirect=${encodeURIComponent(window.location.href)}">Accedi</a> per lasciare un suggerimento.</p>`;
@@ -139,7 +140,7 @@ async function init() {
             await api.post(`/api/books/${bookId}/suggestions`, { testo: text });
             document.getElementById('suggestion-text').value = '';
             const { suggestions } = await api.get(`/api/books/${bookId}`);
-            renderSuggestions(suggestions);
+            mostraSuggerimenti(suggestions);
         } catch { /* utente non autenticato: form nascosto già in precedenza */ }
     });
 }
