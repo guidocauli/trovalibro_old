@@ -35,7 +35,6 @@ Prototipo di piattaforma web di geolocalizzazione culturale per la condivisione 
 ## Avvio rapido
 
 ```
-npm install-scripts approve sqlite3  # necessario per componente sqlite3
 npm install
 npm run seed    # crea biblioteca.db,applica lo schema e carica i dati di test
 npm start       # avvia il server su http://localhost:3000

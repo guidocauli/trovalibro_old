@@ -84,7 +84,7 @@ fieldset {border:1px solid #D9CFB2; border-radius:6px; padding: 1.25rem; margin:
 
 /* parte iniziale della home */
 .cerca {background: #23291F; color:#F7F2E6; padding:3.25rem 0 2rem; margin-bottom: 2rem; }
-.cerca h1 {color:white; max-width:22ch; }
+.cerca h1 {color:white; }
 .cerca p {color:#F1E6CC; font-size:1.05rem; }
 
 .search-bar {display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1.25rem;background:#F7F2E6; padding:0.85rem; border-radius:6px;}
